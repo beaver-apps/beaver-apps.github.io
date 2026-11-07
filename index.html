@@ -2,37 +2,123 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Beaver Apps</title>
-  <meta name="description" content="Little pixel apps with a beaver in them.">
-  <link rel="icon" href="reader/icons/favicon.svg">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Silkscreen&display=swap">
+  <meta name="description" content="Little pixel apps with a beaver in them: Beaver Reader (EPUB and PDF) and Beaver Focus (pomodoro timer and lo-fi radio). Free, no account, works offline.">
+  <meta name="theme-color" content="#dbc9b4" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#2d1e2f" media="(prefers-color-scheme: dark)">
+  <!-- the preview card when the link is shared -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://beaver-apps.github.io/">
+  <meta property="og:title" content="Beaver Apps">
+  <meta property="og:description" content="Little pixel apps with a beaver in them. A cozy book reader and a focus timer. Free, no account, works offline.">
+  <meta property="og:image" content="https://beaver-apps.github.io/assets/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/silkscreen-latin.woff2" as="font" type="font/woff2" crossorigin>
   <style>
-    :root { --bg:#dbc9b4; --surface:#fcecd1; --ink:#2d1e2f; --accent:#7a3b4f; --shadow:#a94b54; }
-    @media (prefers-color-scheme: dark) { :root { --bg:#2d1e2f; --surface:#392945; --ink:#fcecd1; --accent:#f09f71; --shadow:#7a3b4f; } }   /* accents that keep 4.5:1 in both */
+    @font-face { font-family:Silkscreen; src:url(assets/silkscreen-latin.woff2) format('woff2'); font-display:swap; unicode-range:U+0000-00FF, U+2013-2026; }
+    @font-face { font-family:Silkscreen; src:url(assets/silkscreen-latin-ext.woff2) format('woff2'); font-display:swap; unicode-range:U+0100-024F, U+1E00-1EFF; }
+    :root { --bg:#dbc9b4; --surface:#fcecd1; --tile:#ebc8a7; --ink:#2d1e2f; --line:#c3a79c; --accent:#7a3b4f;
+      --red:#a94b54; --red-hi:#d8725e; --red-lo:#7a3b4f; --label:#fcecd1; --outline:0 0 0 4px #2d1e2f; }
+    @media (prefers-color-scheme: dark) { :root { --bg:#2d1e2f; --surface:#392945; --tile:#452e3f; --ink:#fcecd1; --line:#5d4550; --accent:#f09f71; } }
     * { box-sizing:border-box; }
-    body { margin:0; min-height:100vh; display:grid; place-items:center; padding:24px 16px; background:var(--bg); color:var(--ink);
-      font-family:Silkscreen, monospace; text-transform:uppercase; letter-spacing:.04em; }
-    main { width:min(560px, 100%); display:flex; flex-direction:column; gap:20px; }
-    h1 { margin:0; font-weight:400; font-size:24px; text-shadow:3px 3px 0 var(--shadow); }
-    p { margin:0; font-size:11px; line-height:1.8; }
-    .app { display:flex; gap:16px; align-items:center; padding:16px; background:var(--surface); color:var(--ink); text-decoration:none;
-      box-shadow:0 0 0 4px #2d1e2f, 6px 6px 0 4px rgba(45,30,47,.3); }
-    .app:hover, .app:focus-visible { outline:4px solid var(--accent); outline-offset:6px; }
-    .app b { display:block; font-weight:400; font-size:15px; color:var(--accent); margin-bottom:6px; }
-    .app img { width:56px; height:56px; image-rendering:pixelated; flex:none; }
-    footer { font-size:11px; }
-    footer a { color:var(--accent); }
+    html { -webkit-text-size-adjust:100%; }
+    body { margin:0; min-height:100vh; background:var(--bg); color:var(--ink); font-family:Silkscreen, monospace; text-transform:uppercase;
+      letter-spacing:.04em; padding:max(32px, env(safe-area-inset-top)) 16px max(32px, env(safe-area-inset-bottom)); }
+    main { width:min(980px, 100%); margin:0 auto; display:flex; flex-direction:column; gap:36px; }
+    img { image-rendering:pixelated; display:block; }
+    a { color:inherit; }
+
+    .hero { display:grid; grid-template-columns:auto 1fr; gap:24px; align-items:center; }
+    .hero-pic { background:#fcecd1; box-shadow:var(--outline), 6px 6px 0 4px rgba(45, 30, 47, .3); padding:4px 8px 0; }
+    .hero-pic img { width:176px; height:auto; }   /* the GIFs have a cream background: they sit in cream frames */
+    h1 { margin:0 0 12px; font-weight:400; font-size:clamp(28px, 6vw, 44px); line-height:1.1; text-shadow:4px 4px 0 var(--red); }
+    .tag { margin:0 0 20px; font-size:13px; line-height:1.8; max-width:52ch; }
+    .btn { font:inherit; font-size:13px; letter-spacing:.06em; color:var(--label); text-shadow:2px 2px 0 var(--red-lo); text-decoration:none;
+      display:inline-flex; align-items:center; gap:10px; padding:12px 18px; margin:4px; border:0; cursor:pointer; background:var(--red);
+      box-shadow:var(--outline), inset 4px 4px 0 0 var(--red-hi), inset -4px -4px 0 0 var(--red-lo); }
+    .btn:active { transform:translateY(4px); box-shadow:var(--outline), inset 4px 4px 0 0 var(--red-lo), inset -4px -4px 0 0 var(--red-hi); }
+    .btn:focus-visible, .card:focus-within { outline:4px solid var(--red-hi); outline-offset:6px; }
+    .btn.quiet { background:#8f5252; text-shadow:2px 2px 0 #6a3948; box-shadow:var(--outline), inset 4px 4px 0 0 #b87e6c, inset -4px -4px 0 0 #6a3948; }
+    .share-row { display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
+    .note { font-size:11px; opacity:.85; min-height:1em; }
+
+    .apps { display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:28px; }
+    .card { background:var(--surface); box-shadow:var(--outline), 8px 8px 0 4px rgba(45, 30, 47, .3); padding:22px; display:flex; flex-direction:column; gap:16px; }
+    .card .pic { background:#fcecd1; box-shadow:0 0 0 3px var(--line); display:grid; place-items:center; padding:8px 0 4px; }
+    .card .pic img { width:352px; max-width:100%; height:auto; }   /* whole-number scales only */
+    .card h2 { margin:0; font-weight:400; font-size:20px; color:var(--accent); }
+    .card p { margin:0; font-size:12px; line-height:1.8; text-transform:none; }
+    .card ul { margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px; font-size:11px; line-height:1.6; }
+    .card li::before { content:""; display:inline-block; width:8px; height:8px; margin-right:10px; background:var(--red); box-shadow:2px 2px 0 var(--red-lo); vertical-align:1px; }
+    .card .btn { align-self:flex-start; margin-top:auto; }
+
+    footer { text-align:center; font-size:11px; line-height:1.8; }
+    footer a { color:var(--accent); text-decoration:none; box-shadow:inset 0 -2px 0 currentColor; }
+    footer a:hover, footer a:focus-visible { background:var(--red); color:#fcecd1; box-shadow:none; outline:none; }
+
+    @media (max-width:620px) {
+      .hero { grid-template-columns:1fr; justify-items:center; text-align:center; }
+      .hero-pic img { width:132px; }
+      .share-row { justify-content:center; }
+    }
+    @media (prefers-reduced-motion:reduce) { .btn:active { transform:none; } }
   </style>
 </head>
 <body>
   <main>
-    <h1>Beaver Apps</h1>
-    <p>Little pixel apps with a beaver in them :)</p>
-    <a class="app" href="focus/"><img src="focus/icons/favicon.svg" alt=""><span><b>Beaver Focus</b><p>A pomodoro timer and lo-fi radio. The beaver works, takes breaks and naps with you.</p></span></a>
-    <a class="app" href="reader/"><img src="reader/icons/favicon.svg" alt=""><span><b>Beaver Reader</b><p>An EPUB and PDF reader and library. The beaver climbs the bookcase and reads along.</p></span></a>
+    <header class="hero">
+      <div class="hero-pic"><img src="assets/beaver-wave.gif" width="176" height="120" alt="The pixel beaver waving hello"></div>
+      <div>
+        <h1>Beaver Apps</h1>
+        <p class="tag">Little pixel apps with a beaver in them :) Free, no account, works offline, in 10 languages, and your stuff stays on your device.</p>
+        <div class="share-row">
+          <button class="btn" id="share" type="button">Share the beaver apps</button>
+          <span class="note" id="share-note" role="status" aria-live="polite"></span>
+        </div>
+      </div>
+    </header>
+
+    <section class="apps" aria-label="The apps">
+      <article class="card">
+        <div class="pic"><img src="assets/beaver-read.gif" width="352" height="240" alt="The beaver reading an open book"></div>
+        <h2>Beaver Reader</h2>
+        <p>A cozy EPUB and PDF reader with a pixel bookcase. The beaver climbs it, dusts it and reads along with you.</p>
+        <ul>
+          <li>Shelves you can drag books between</li>
+          <li>Highlights, notes and read aloud</li>
+          <li>Reading stats, goals and streaks</li>
+        </ul>
+        <a class="btn" href="https://beaver-apps.github.io/reader/">Open Beaver Reader</a>
+      </article>
+      <article class="card">
+        <div class="pic"><img src="assets/beaver-code.gif" width="352" height="240" alt="The beaver typing away at a little computer"></div>
+        <h2>Beaver Focus</h2>
+        <p>A pomodoro timer with a lo-fi radio. The beaver works while you work, takes breaks with you and naps at night.</p>
+        <ul>
+          <li>Focus, short and long breaks</li>
+          <li>Beaver Pod: lo-fi made in your browser</li>
+          <li>His whole daily routine to watch</li>
+        </ul>
+        <a class="btn" href="https://beaver-apps.github.io/focus/">Open Beaver Focus</a>
+      </article>
+    </section>
+
+
     <footer>Made with acorns by <a href="https://github.com/BwunLevain">BwunLevain</a> · part of <a href="https://github.com/beaver-apps">Beaver Apps</a> on GitHub</footer>
   </main>
+  <script>
+    // share the suite: the phone's share sheet where there is one, otherwise copy the link
+    document.getElementById('share').addEventListener('click', async () => {
+      const note = document.getElementById('share-note'), data = { title: 'Beaver Apps', text: 'Little pixel apps with a beaver in them :)', url: 'https://beaver-apps.github.io/' };
+      try {
+        if (navigator.share) { await navigator.share(data); return; }
+        await navigator.clipboard.writeText(data.url); note.textContent = 'Link copied :)';
+      } catch (e) { if (e && e.name !== 'AbortError') note.textContent = data.url; }
+    });
+  </script>
 </body>
 </html>
