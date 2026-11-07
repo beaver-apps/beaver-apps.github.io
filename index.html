@@ -30,8 +30,24 @@
     * { box-sizing:border-box; }
     html { -webkit-text-size-adjust:100%; }
     body { margin:0; min-height:100vh; background:var(--desk); color:var(--cream); font-family:Silkscreen, monospace; text-transform:uppercase;
-      letter-spacing:.04em; padding:max(40px, env(safe-area-inset-top)) 16px max(40px, env(safe-area-inset-bottom)); }
-    main { width:min(980px, 100%); margin:0 auto; display:flex; flex-direction:column; gap:40px; }
+      letter-spacing:.04em; padding:0 16px max(40px, env(safe-area-inset-bottom)); }
+    main { width:min(980px, 100%); margin:32px auto 0; display:flex; flex-direction:column; gap:40px; }
+    @media (prefers-reduced-motion:no-preference) { html { scroll-behavior:smooth; } }
+    main > header, main > section { scroll-margin-top:84px; }      /* clear of the sticky bar */
+
+    /* ---------- the section bar: quiet cream words stuck to the top; the section you're reading is underlined in red ---------- */
+    .topnav { position:sticky; top:0; z-index:10; margin:0 -16px; padding:calc(10px + env(safe-area-inset-top)) 16px 10px;
+      background:var(--desk); box-shadow:0 4px 0 0 #452e3f; }
+    .topnav-in { width:min(980px, 100%); margin:0 auto; display:flex; align-items:center; gap:16px; }
+    .brand { display:flex; align-items:center; gap:10px; flex:none; font-size:13px; color:var(--cream); text-decoration:none; text-shadow:2px 2px 0 var(--red); }
+    .brand img { width:32px; height:32px; }
+    .brand:focus-visible { outline:4px solid var(--peach); outline-offset:4px; }
+    .navlinks { display:flex; gap:8px; margin-left:auto; overflow-x:auto; scrollbar-width:none; padding:4px; }
+    .navlinks::-webkit-scrollbar { display:none; }
+    .navlinks a { flex:none; font-size:12px; letter-spacing:.06em; color:var(--cream); text-decoration:none; padding:10px 10px 8px; }
+    .navlinks a[aria-current="true"] { box-shadow:inset 0 -4px 0 0 var(--red); }
+    .navlinks a:focus-visible { outline:4px solid var(--peach); outline-offset:2px; }
+    @media (hover:hover) { .navlinks a:not([aria-current]):hover { color:var(--peach); box-shadow:inset 0 -4px 0 0 #5d4550; } }
     img { image-rendering:pixelated; display:block; }
     a { color:inherit; }
 
@@ -84,7 +100,7 @@
     .howto:hover, .howto:focus-visible { background:var(--red); color:var(--cream); box-shadow:none; outline:none; }
 
     /* ---------- how to install: a tab per kind of device, and a drawn picture of the screen for every step ---------- */
-    .install { --brk:16px; padding:32px 32px 36px; display:flex; flex-direction:column; gap:20px; scroll-margin-top:24px; }
+    .install { --brk:16px; padding:32px 32px 36px; display:flex; flex-direction:column; gap:20px; }
     .install-head { display:grid; grid-template-columns:auto 1fr; gap:20px; align-items:center; }
     .install-head img { width:132px; height:auto; }
     .install h2 { margin:0 0 8px; font-weight:400; font-size:20px; color:var(--accent); }
@@ -121,8 +137,35 @@
     .film { margin:0; }
     .film video { display:block; width:100%; height:auto; aspect-ratio:16 / 9; background:var(--desk); }
 
+    /* ---------- questions: each one opens when you tap it ---------- */
+    .faq { --brk:16px; padding:32px 32px 36px; display:flex; flex-direction:column; gap:12px; }
+    .faq h2, .about h2 { margin:0 0 8px; font-weight:400; font-size:20px; color:var(--accent); }
+    .faq details { box-shadow:inset 0 -4px 0 0 var(--paper-lo); }
+    .faq summary { list-style:none; cursor:pointer; display:flex; align-items:center; gap:12px; padding:14px 0 16px; font-size:13px; line-height:1.5; }
+    .faq summary::-webkit-details-marker { display:none; }
+    .faq summary::before { content:"+"; flex:none; display:grid; place-items:center; width:24px; height:24px; font-size:14px; color:var(--cream);
+      background:var(--red); box-shadow:inset 3px 3px 0 0 var(--red-hi), inset -3px -3px 0 0 var(--red-lo); }
+    .faq details[open] summary::before { content:"-"; }
+    .faq summary:focus-visible { outline:4px solid var(--peach); outline-offset:2px; }
+    .faq details p { margin:0 0 18px 36px; font-size:12px; line-height:1.8; text-transform:none; letter-spacing:.02em; }
+    .faq details p a { color:var(--accent); }
+
+    /* ---------- about: the beaver and the person who made him ---------- */
+    .about { --brk:16px; padding:32px 32px 36px; display:flex; flex-direction:column; gap:20px; }
+    .about-grid { display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:32px; }
+    .who { display:flex; flex-direction:column; gap:12px; }
+    .who img { width:352px; max-width:100%; height:auto; align-self:center; }
+    .who h3 { margin:0; font-weight:400; font-size:14px; color:var(--accent); }
+    .who p { margin:0; font-size:12px; line-height:1.8; text-transform:none; letter-spacing:.02em; }
+    .who .btn { align-self:flex-start; }
+
     @media (max-width:620px) {
       .install { padding:26px 20px 30px; }
+      .faq, .about { padding:26px 20px 30px; }
+      .about-grid { grid-template-columns:1fr; }
+      .brand { display:none; }                                    /* phones: all five buttons fit across, no icon */
+      .navlinks { margin:0; width:100%; justify-content:space-between; gap:4px; padding:4px 2px; }
+      .navlinks a { font-size:11px; letter-spacing:.02em; padding:10px 6px; }        /* (the site keeps text at 11px or more) */
       .watch { padding:26px 20px 30px; }
       .film video { aspect-ratio:9 / 16; }
       .install-head { grid-template-columns:1fr; justify-items:center; text-align:center; }
@@ -142,8 +185,16 @@
   </style>
 </head>
 <body>
+  <nav class="topnav" aria-label="Sections">
+    <div class="topnav-in">
+      <a class="brand" href="#top"><img src="assets/favicon.svg" width="32" height="32" alt=""><span>Beaver Apps</span></a>
+      <div class="navlinks">
+        <a href="#apps">Apps</a><a href="#watch">Videos</a><a href="#install">Install</a><a href="#faq">FAQ</a><a href="#about">About</a>
+      </div>
+    </div>
+  </nav>
   <main>
-    <header class="hero">
+    <header class="hero" id="top">
       <div class="hero-pic paper"><img src="assets/beaver-wave.gif" width="176" height="120" alt="The pixel beaver waving hello"></div>
       <div>
         <h1>Beaver Apps</h1>
@@ -156,7 +207,7 @@
       </div>
     </header>
 
-    <section class="apps" aria-label="The apps">
+    <section class="apps" id="apps" aria-label="The apps">
       <article class="card paper">
         <div class="pic"><img src="assets/beaver-read.gif" width="352" height="240" alt="The beaver reading an open book"></div>
         <h2>Beaver Reader</h2>
@@ -256,6 +307,67 @@
     </section>
 
 
+    <section class="faq paper" id="faq" aria-labelledby="faq-title">
+      <h2 id="faq-title">Questions people ask</h2>
+      <details>
+        <summary>Is it really free?</summary>
+        <p>Yes. Every Beaver App is free: no ads, no subscription and nothing to unlock.</p>
+      </details>
+      <details>
+        <summary>Do I need an account?</summary>
+        <p>No. Open the app and start. You only sign in if you want to sync between your devices, and that's up to you.</p>
+      </details>
+      <details>
+        <summary>Where are my books and data kept?</summary>
+        <p>On your own device, inside your browser. If you turn on sync, a copy goes to your own Google Drive or GitHub, where only you can see it. There's no Beaver Apps server in between, so we never get a copy. Looking up a word in Beaver Reader sends just that word to Wiktionary for its definition. The <a href="privacy.html">privacy page</a> has all the details.</p>
+      </details>
+      <details>
+        <summary>Does it work without internet?</summary>
+        <p>Yes. Add it to your home screen or desktop (see <a href="#install">Install</a>) and it works offline. Only sync and looking up a word need a connection.</p>
+      </details>
+      <details>
+        <summary>Phone, tablet or computer?</summary>
+        <p>All of them. Each app has a layout for phones and one for computers, and it runs in any modern browser.</p>
+      </details>
+      <details>
+        <summary>How do I get my stuff on another device?</summary>
+        <p>Turn on sync in Settings. Beaver Reader keeps your books, your place, highlights, notes and reading stats in your own Google Drive (or a private GitHub repo), and they follow you to every device. Beaver Focus keeps your stats and settings in a private gist on your own GitHub. Either way, it's your account and only you can see it.</p>
+      </details>
+      <details>
+        <summary>Which languages?</summary>
+        <p>Both speak English, Svenska, Dansk, Norsk, Suomi, Deutsch, Español, Français, 中文 and 日本語. They start in your device's language, and you can switch in Settings.</p>
+      </details>
+      <details>
+        <summary>Are they in the App Store or Google Play?</summary>
+        <p>No, and they don't need to be. You add them straight from your browser in a few taps, and they get their own icon like any other app. The <a href="#install">install guide</a> shows how.</p>
+      </details>
+      <details>
+        <summary>I found a bug, or I have an idea</summary>
+        <p>Tell the beaver :) Open an issue on the app's GitHub page: <a href="https://github.com/beaver-apps/reader/issues">Beaver Reader</a> or <a href="https://github.com/beaver-apps/focus/issues">Beaver Focus</a>. You'll need a free GitHub account.</p>
+      </details>
+      <details>
+        <summary>Can I share or change them?</summary>
+        <p>Yes, for anything non-commercial: the apps are free to use, change and share under the PolyForm Noncommercial licence. Nobody may sell them or use them to make money.</p>
+      </details>
+    </section>
+
+    <section class="about paper" id="about" aria-labelledby="about-title">
+      <h2 id="about-title">About us</h2>
+      <div class="about-grid">
+        <div class="who">
+          <img src="assets/beaver-sitread.gif" width="352" height="240" alt="The beaver sitting on a shelf edge, reading a book">
+          <h3>The beaver</h3>
+          <p>Hi, I'm the beaver :) I have lots of jobs, and I keep getting new ones. In Beaver Reader I'm the librarian: I climb the bookcase, dust the shelfs and read along with you. In Beaver Focus I sit at my desk and work rigth beside you. In between I make brekfast, build dams and take a lot of naps. Evry job is better with a buddy.</p>
+        </div>
+        <div class="who">
+          <img src="assets/beaver-paint.gif" width="352" height="240" alt="The beaver painting a little landscape at an easel">
+          <h3>BwunLevain, who made him</h3>
+          <p>I made Beaver Apps because the beaver is so cute, and because I wanted functional apps that don't suck or feel overwhelming. Free, no accounts, nothing following you around. So I drew a beaver and gave him a job. Then another one. He's going to have a lot of them.</p>
+          <a class="btn" href="https://github.com/BwunLevain">BwunLevain on GitHub</a>
+        </div>
+      </div>
+    </section>
+
     <footer>Made with acorns by <a href="https://github.com/BwunLevain">BwunLevain</a> · part of <a href="https://github.com/beaver-apps">Beaver Apps</a> on GitHub · <a href="privacy.html">Privacy</a></footer>
   </main>
   <script>
@@ -267,6 +379,17 @@
         await navigator.clipboard.writeText(data.url); note.textContent = 'Link copied :)';
       } catch (e) { if (e && e.name !== 'AbortError') note.textContent = data.url; }
     });
+
+    // ---------- the section bar: the button for the section on screen is red ----------
+    const navLinks = [...document.querySelectorAll('.navlinks a')];
+    const mark = id => navLinks.forEach(a => {
+      const on = a.getAttribute('href') === '#' + id;
+      if (on) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+      const bar = a.parentElement;                                          // phones: keep it in view in the bar (only the bar scrolls)
+      if (on && (a.offsetLeft < bar.scrollLeft || a.offsetLeft + a.offsetWidth > bar.scrollLeft + bar.clientWidth)) bar.scrollLeft = a.offsetLeft - 8;
+    });
+    const seen = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) mark(e.target.id); }), { rootMargin: '-35% 0px -60% 0px' });
+    ['top', 'apps', 'watch', 'install', 'faq', 'about'].forEach(id => seen.observe(document.getElementById(id)));
 
     // ---------- tabs (the videos and the install guide): one panel at a time, arrow keys move between them ----------
     function tablist(list, onPick) {
