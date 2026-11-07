@@ -82,7 +82,6 @@
 
     .howto { font-size:12px; color:var(--peach); text-decoration:none; box-shadow:inset 0 -2px 0 currentColor; }
     .howto:hover, .howto:focus-visible { background:var(--red); color:var(--cream); box-shadow:none; outline:none; }
-    .card .howto { color:var(--accent); align-self:flex-start; }
 
     /* ---------- how to install: a tab per kind of device, and a drawn picture of the screen for every step ---------- */
     .install { --brk:16px; padding:32px 32px 36px; display:flex; flex-direction:column; gap:20px; scroll-margin-top:24px; }
@@ -115,8 +114,17 @@
     .hit { animation:hit 1.2s steps(2) infinite; }                   /* the button to press blinks between red and peach */
     @keyframes hit { 50% { stroke:var(--peach); } }
 
+    /* ---------- the promo videos: 16:9 on computers, the 9:16 cut on phones ---------- */
+    .watch { --brk:16px; padding:32px 32px 36px; display:flex; flex-direction:column; gap:20px; }
+    .watch h2 { margin:0 0 8px; font-weight:400; font-size:20px; color:var(--accent); }
+    .watch-head p { margin:0; font-size:12px; line-height:1.8; text-transform:none; }
+    .film { margin:0; }
+    .film video { display:block; width:100%; height:auto; aspect-ratio:16 / 9; background:var(--desk); }
+
     @media (max-width:620px) {
       .install { padding:26px 20px 30px; }
+      .watch { padding:26px 20px 30px; }
+      .film video { aspect-ratio:9 / 16; }
       .install-head { grid-template-columns:1fr; justify-items:center; text-align:center; }
       .steps { grid-template-columns:1fr; gap:22px; }
       .steps li, .steps li.wide { grid-column:auto; display:grid; grid-template-columns:118px 1fr; gap:14px; align-items:start; }
@@ -159,7 +167,6 @@
           <li>Reading stats, goals and streaks</li>
         </ul>
         <a class="btn" href="https://beaver-apps.github.io/reader/">Open Beaver Reader</a>
-        <a class="howto" href="#install">How do I install it?</a>
       </article>
       <article class="card paper">
         <div class="pic"><img src="assets/beaver-code.gif" width="352" height="240" alt="The beaver typing away at a little computer"></div>
@@ -171,8 +178,34 @@
           <li>His whole daily routine to watch</li>
         </ul>
         <a class="btn" href="https://beaver-apps.github.io/focus/">Open Beaver Focus</a>
-        <a class="howto" href="#install">How do I install it?</a>
       </article>
+    </section>
+
+    <section class="watch paper" id="watch" aria-labelledby="watch-title">
+      <div class="watch-head">
+        <h2 id="watch-title">Watch the beaver show you around</h2>
+        <p>Pick an app. Half a minute each, with sound. The music is from Beaver Pod, the lo-fi radio in Beaver Focus :)</p>
+      </div>
+      <div class="tabs" role="tablist" aria-label="Which app">
+        <button class="tab" role="tab" id="tab-film-reader" aria-controls="film-reader" aria-selected="true" type="button">Beaver Reader</button>
+        <button class="tab" role="tab" id="tab-film-focus" aria-controls="film-focus" aria-selected="false" type="button" tabindex="-1">Beaver Focus</button>
+      </div>
+      <div>
+        <figure class="film" id="film-reader" role="tabpanel" aria-labelledby="tab-film-reader">
+          <video controls preload="none" playsinline width="1920" height="1080" poster="assets/promo/beaver-reader-16x9.jpg"
+            data-tall-poster="assets/promo/beaver-reader-9x16.jpg" aria-label="Beaver Reader promo video">
+            <source src="assets/promo/beaver-reader-9x16.mp4" type="video/mp4" media="(max-width:620px)">
+            <source src="assets/promo/beaver-reader-16x9.mp4" type="video/mp4">
+          </video>
+        </figure>
+        <figure class="film" id="film-focus" role="tabpanel" aria-labelledby="tab-film-focus" hidden>
+          <video controls preload="none" playsinline width="1920" height="1080" poster="assets/promo/beaver-focus-16x9.jpg"
+            data-tall-poster="assets/promo/beaver-focus-9x16.jpg" aria-label="Beaver Focus promo video">
+            <source src="assets/promo/beaver-focus-9x16.mp4" type="video/mp4" media="(max-width:620px)">
+            <source src="assets/promo/beaver-focus-16x9.mp4" type="video/mp4">
+          </video>
+        </figure>
+      </div>
     </section>
 
     <section class="install paper" id="install" aria-labelledby="install-title">
@@ -235,18 +268,31 @@
       } catch (e) { if (e && e.name !== 'AbortError') note.textContent = data.url; }
     });
 
-    // ---------- the install guide: tabs, opened on the reader's own kind of device ----------
-    const tabs = [...document.querySelectorAll('.tab')];
-    function pick(tab, focus) {
-      tabs.forEach(t => { const on = t === tab; t.setAttribute('aria-selected', on); t.tabIndex = on ? 0 : -1; document.getElementById(t.getAttribute('aria-controls')).hidden = !on; });
-      if (focus) tab.focus();
+    // ---------- tabs (the videos and the install guide): one panel at a time, arrow keys move between them ----------
+    function tablist(list, onPick) {
+      const tabs = [...list.querySelectorAll('.tab')];
+      const pick = (tab, focus) => {
+        tabs.forEach(t => { const on = t === tab; t.setAttribute('aria-selected', on); t.tabIndex = on ? 0 : -1; document.getElementById(t.getAttribute('aria-controls')).hidden = !on; });
+        if (focus) tab.focus();
+        if (onPick) onPick(tab);
+      };
+      tabs.forEach((t, i) => {
+        t.addEventListener('click', () => pick(t));
+        t.addEventListener('keydown', e => { const d = { ArrowRight: 1, ArrowLeft: -1 }[e.key]; if (d) { e.preventDefault(); pick(tabs[(i + d + tabs.length) % tabs.length], true); } });
+      });
+      return pick;
     }
-    tabs.forEach((t, i) => {
-      t.addEventListener('click', () => pick(t));
-      t.addEventListener('keydown', e => { const d = { ArrowRight: 1, ArrowLeft: -1 }[e.key]; if (d) { e.preventDefault(); pick(tabs[(i + d + tabs.length) % tabs.length], true); } });
-    });
+
+    // the videos: narrow screens play the 9:16 cut (picked by <source media>), so show its poster too;
+    // switching to the other app pauses the one you were watching
+    const films = [...document.querySelectorAll('.film video')];
+    if (matchMedia('(max-width:620px)').matches) films.forEach(v => { v.poster = v.dataset.tallPoster; });
+    tablist(document.querySelector('#watch .tabs'), () => films.forEach(v => { if (v.closest('[hidden]')) v.pause(); }));
+
+    // the install guide, opened on the reader's own kind of device
+    const pickDevice = tablist(document.querySelector('#install .tabs'));
     const ua = navigator.userAgent, ipad = /Macintosh/.test(ua) && navigator.maxTouchPoints > 1;
-    pick(document.getElementById(/iPhone|iPad|iPod/.test(ua) || ipad ? 'tab-ios' : /Android/.test(ua) ? 'tab-android' : 'tab-computer'));
+    pickDevice(document.getElementById(/iPhone|iPad|iPod/.test(ua) || ipad ? 'tab-ios' : /Android/.test(ua) ? 'tab-android' : 'tab-computer'));
 
     // ---------- the drawn screens: pixel pictures in the page's own colours; the thing to press blinks ----------
     const C = { ink:'#2d1e2f', dim:'#5d4550', paper:'#fcecd1', lo:'#ebc8a7', tan:'#d3a084', tlo:'#b87e6c', red:'#a94b54', peach:'#f09f71', plum:'#392945', teal:'#488885', green:'#64b082', grey:'#c3a79c' };

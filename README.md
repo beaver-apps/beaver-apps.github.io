@@ -20,6 +20,10 @@ on your own device.
 | <img src="assets/beaver-read.gif" width="176" alt="The beaver reading a book"> | **[Beaver Reader](https://beaver-apps.github.io/reader/)**<br>A cozy EPUB and PDF reader with a pixel bookcase. I climb it, dust it and read along with you. ([repo](https://github.com/beaver-apps/reader)) |
 | <img src="assets/beaver-code.gif" width="176" alt="The beaver working at a little computer"> | **[Beaver Focus](https://beaver-apps.github.io/focus/)**<br>A pomodoro timer with a lo-fi radio. I work while you work, take breaks with you and nap at night. ([repo](https://github.com/beaver-apps/focus)) |
 
+Want to see them first? The page has a short video of each, and here they are too:
+[Beaver Reader](assets/promo/beaver-reader-16x9.mp4) and [Beaver Focus](assets/promo/beaver-focus-16x9.mp4)
+(or the phone-shaped ones: [Reader](assets/promo/beaver-reader-9x16.mp4), [Focus](assets/promo/beaver-focus-9x16.mp4)).
+
 Install either one to your home screen or desktop from the browser and it works like a normal app. The page has a
 picture-by-picture guide for iPhone and iPad, Android and computers (it opens on the right one for your device).
 
