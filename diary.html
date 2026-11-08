@@ -53,6 +53,33 @@
       </div>
     </section>
 
+    <script>
+      // Write entries as plain articles, newest first. Once the diary spans more than one month, the script puts each
+      // month under its own heading and folds the older ones shut; a link to one entry (#its-id) opens its month.
+      (() => {
+        const list = document.querySelector('.diary .entries'), all = [...list.querySelectorAll('article.entry')];
+        const month = a => (a.querySelector('time')?.getAttribute('datetime') || '').slice(0, 7);
+        const keys = [...new Set(all.map(month))];
+        if (keys.length < 2) return;
+        const name = new Intl.DateTimeFormat('en-GB', { month: 'long', year: 'numeric' });
+        const months = document.createElement('div'); months.className = 'months';
+        keys.forEach((k, i) => {
+          const fold = document.createElement('details'), head = document.createElement('summary'), box = document.createElement('div');
+          const mine = all.filter(a => month(a) === k), [y, m] = k.split('-').map(Number);
+          fold.className = 'month'; fold.open = i === 0; box.className = 'entries';
+          head.append(name.format(new Date(y, m - 1, 1)) + ' ');
+          const n = document.createElement('small'); n.textContent = mine.length === 1 ? '1 entry' : mine.length + ' entries'; head.append(n);
+          box.append(...mine); fold.append(head, box); months.append(fold);
+        });
+        list.replaceWith(months);
+        const show = () => {
+          const id = decodeURIComponent(location.hash.slice(1)), t = id && document.getElementById(id), fold = t && t.closest('details');
+          if (fold && !fold.open) { fold.open = true; t.scrollIntoView(); }
+        };
+        show(); addEventListener('hashchange', show);
+      })();
+    </script>
+
     <footer>Made with acorns by <a href="https://github.com/BwunLevain">BwunLevain</a> · part of <a href="https://github.com/beaver-apps">Beaver Apps</a> on GitHub · <a href="privacy.html">Privacy</a></footer>
   </main>
 </body>

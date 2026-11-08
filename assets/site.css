@@ -117,13 +117,14 @@ footer a:hover, footer a:focus-visible { background:var(--red); color:var(--crea
 /* ---------- questions: each one opens when you tap it ---------- */
 .faq { --brk:16px; padding:32px 32px 36px; display:flex; flex-direction:column; gap:12px; }
 .faq h2, .about h2 { margin:0 0 8px; font-weight:400; font-size:20px; color:var(--accent); }
-.faq details { box-shadow:inset 0 -4px 0 0 var(--paper-lo); }
-.faq summary { list-style:none; cursor:pointer; display:flex; align-items:center; gap:12px; padding:14px 0 16px; font-size:13px; line-height:1.5; }
-.faq summary::-webkit-details-marker { display:none; }
-.faq summary::before { content:"+"; flex:none; display:grid; place-items:center; width:24px; height:24px; font-size:14px; color:var(--cream);
+/* folds: the FAQ's questions and the diary's older months open and close the same way */
+.faq details, .month { box-shadow:inset 0 -4px 0 0 var(--paper-lo); }
+.faq summary, .month summary { list-style:none; cursor:pointer; display:flex; align-items:center; gap:12px; padding:14px 0 16px; font-size:13px; line-height:1.5; }
+.faq summary::-webkit-details-marker, .month summary::-webkit-details-marker { display:none; }
+.faq summary::before, .month summary::before { content:"+"; flex:none; display:grid; place-items:center; width:24px; height:24px; font-size:14px; color:var(--cream);
   background:var(--red); box-shadow:inset 3px 3px 0 0 var(--red-hi), inset -3px -3px 0 0 var(--red-lo); }
-.faq details[open] summary::before { content:"-"; }
-.faq summary:focus-visible { outline:4px solid var(--peach); outline-offset:2px; }
+.faq details[open] summary::before, .month[open] summary::before { content:"-"; }
+.faq summary:focus-visible, .month summary:focus-visible { outline:4px solid var(--peach); outline-offset:2px; }
 .faq details p { margin:0 0 18px 36px; font-size:12px; line-height:1.8; text-transform:none; letter-spacing:.02em; }
 .faq details p a { color:var(--accent); }
 
@@ -179,6 +180,10 @@ footer a:hover, footer a:focus-visible { background:var(--red); color:var(--crea
 .entry p { margin:0; font-size:12px; line-height:22px; text-transform:none; letter-spacing:.02em; }
 .entry p + p { margin-top:22px; }
 .diary > .btn { align-self:flex-start; }
+.months { display:flex; flex-direction:column; }
+.month summary { color:var(--accent); }
+.month summary small { font-size:11px; color:var(--ink); }
+.month > .entries { padding:6px 0 26px; }
 .diary-top { display:grid; grid-template-columns:auto 1fr; gap:28px; align-items:center; }
 .diary-top .hero-pic img { width:176px; height:auto; }
 @media (max-width:620px) {
