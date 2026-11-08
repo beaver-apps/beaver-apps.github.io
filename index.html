@@ -21,181 +21,14 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <link rel="preload" href="assets/silkscreen-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <style>
-    @font-face { font-family:Silkscreen; src:url(assets/silkscreen-latin.woff2) format('woff2'); font-display:swap; unicode-range:U+0000-00FF, U+2013-2026; }
-    @font-face { font-family:Silkscreen; src:url(assets/silkscreen-latin-ext.woff2) format('woff2'); font-display:swap; unicode-range:U+0100-024F, U+1E00-1EFF; }
-    /* parchment on a deep plum desk: no outlines, stepped pixel corners, tan corner brackets, a stack of page edges */
-    :root { --desk:#392945; --paper:#fcecd1; --paper-lo:#ebc8a7; --tan:#d3a084; --tan-lo:#b87e6c; --ink:#2d1e2f; --accent:#7a3b4f;
-      --cream:#fcecd1; --peach:#f09f71; --red:#a94b54; --red-hi:#d8725e; --red-lo:#7a3b4f; }
-    * { box-sizing:border-box; }
-    html { -webkit-text-size-adjust:100%; }
-    body { margin:0; min-height:100vh; background:var(--desk); color:var(--cream); font-family:Silkscreen, monospace; text-transform:uppercase;
-      letter-spacing:.04em; padding:0 16px max(40px, env(safe-area-inset-bottom)); }
-    main { width:min(980px, 100%); margin:32px auto 0; display:flex; flex-direction:column; gap:40px; }
-    @media (prefers-reduced-motion:no-preference) { html { scroll-behavior:smooth; } }
-    main > header, main > section { scroll-margin-top:84px; }      /* clear of the sticky bar */
-
-    /* ---------- the section bar: quiet cream words stuck to the top; the section you're reading is underlined in red ---------- */
-    .topnav { position:sticky; top:0; z-index:10; margin:0 -16px; padding:calc(10px + env(safe-area-inset-top)) 16px 10px;
-      background:var(--desk); box-shadow:0 4px 0 0 #452e3f; }
-    .topnav-in { width:min(980px, 100%); margin:0 auto; display:flex; align-items:center; gap:16px; }
-    .brand { display:flex; align-items:center; gap:10px; flex:none; font-size:13px; color:var(--cream); text-decoration:none; text-shadow:2px 2px 0 var(--red); }
-    .brand img { width:32px; height:32px; }
-    .brand:focus-visible { outline:4px solid var(--peach); outline-offset:4px; }
-    .navlinks { display:flex; gap:8px; margin-left:auto; overflow-x:auto; scrollbar-width:none; padding:4px; }
-    .navlinks::-webkit-scrollbar { display:none; }
-    .navlinks a { flex:none; font-size:12px; letter-spacing:.06em; color:var(--cream); text-decoration:none; padding:10px 10px 8px; }
-    .navlinks a[aria-current="true"] { box-shadow:inset 0 -4px 0 0 var(--red); }
-    .navlinks a:focus-visible { outline:4px solid var(--peach); outline-offset:2px; }
-    @media (hover:hover) { .navlinks a:not([aria-current]):hover { color:var(--peach); box-shadow:inset 0 -4px 0 0 #5d4550; } }
-    img { image-rendering:pixelated; display:block; }
-    a { color:inherit; }
-
-    /* a sheet of paper: pixel-stepped corners (two 4px steps), brackets in two corners */
-    .paper { --cut:polygon(8px 0, calc(100% - 8px) 0, calc(100% - 8px) 4px, calc(100% - 4px) 4px, calc(100% - 4px) 8px, 100% 8px,
-        100% calc(100% - 8px), calc(100% - 4px) calc(100% - 8px), calc(100% - 4px) calc(100% - 4px), calc(100% - 8px) calc(100% - 4px),
-        calc(100% - 8px) 100%, 8px 100%, 8px calc(100% - 4px), 4px calc(100% - 4px), 4px calc(100% - 8px), 0 calc(100% - 8px),
-        0 8px, 4px 8px, 4px 4px, 8px 4px);
-      position:relative; color:var(--ink); clip-path:var(--cut);
-      background:
-        linear-gradient(var(--tan), var(--tan)) 16px 16px / 52px 4px no-repeat, linear-gradient(var(--tan), var(--tan)) 16px 16px / 4px 52px no-repeat,
-        linear-gradient(var(--tan-lo), var(--tan-lo)) 16px 16px / 8px 4px no-repeat,
-        linear-gradient(var(--tan), var(--tan)) right 16px bottom var(--brk, 16px) / 52px 4px no-repeat,
-        linear-gradient(var(--tan), var(--tan)) right 16px bottom var(--brk, 16px) / 4px 52px no-repeat,
-        var(--paper);
-      box-shadow:inset -6px 0 0 var(--paper-lo); }
-
-    .hero { display:grid; grid-template-columns:auto 1fr; gap:28px; align-items:center; }
-    .hero-pic { padding:20px 28px 16px; }
-    .hero-pic img { width:176px; height:auto; }   /* the GIFs are drawn on the same cream as the paper */
-    h1 { margin:0 0 12px; font-weight:400; font-size:clamp(28px, 6vw, 44px); line-height:1.1; color:var(--cream); text-shadow:4px 4px 0 var(--red); }
-    .tag { margin:0 0 20px; font-size:13px; line-height:1.8; max-width:52ch; }
-    .btn { font:inherit; font-size:13px; letter-spacing:.06em; color:var(--cream); text-shadow:2px 2px 0 var(--red-lo); text-decoration:none;
-      display:inline-flex; align-items:center; gap:10px; padding:12px 18px; margin:4px; border:0; cursor:pointer; background:var(--red);
-      box-shadow:inset 4px 4px 0 0 var(--red-hi), inset -4px -4px 0 0 var(--red-lo), 0 4px 0 0 var(--red-lo); }
-    .btn:active { transform:translateY(4px); box-shadow:inset 4px 4px 0 0 var(--red-lo), inset -4px -4px 0 0 var(--red-hi); }
-    .btn:focus-visible { outline:4px solid var(--peach); outline-offset:4px; }
-    .share-row { display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
-    .note { font-size:11px; color:var(--peach); min-height:1em; }
-
-    .apps { display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:32px; }
-    /* an app card: a page with a stack of page edges underneath, like a closed book seen from the front */
-    .card { --brk:36px; padding:30px 32px 52px; display:flex; flex-direction:column; gap:16px; }
-    .card::after { content:""; position:absolute; left:0; right:0; bottom:0; height:16px;
-      background:linear-gradient(var(--tan) 0 4px, var(--paper) 4px 8px, var(--tan) 8px 12px, var(--tan-lo) 12px 16px); }
-    .card .pic { display:grid; place-items:center; }
-    .card .pic img { width:352px; max-width:100%; height:auto; }   /* whole-number scales only */
-    .card h2 { margin:0; font-weight:400; font-size:20px; color:var(--accent); }
-    .card p { margin:0; font-size:12px; line-height:1.8; text-transform:none; }
-    .card ul { margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px; font-size:11px; line-height:1.6; }
-    .card li::before { content:""; display:inline-block; width:8px; height:8px; margin-right:10px; vertical-align:1px; background:var(--tan);
-      clip-path:polygon(50% 0, 100% 50%, 50% 100%, 0 50%); }   /* a little pixel diamond */
-    .card .btn { align-self:flex-start; margin-top:auto; }
-
-    footer { text-align:center; font-size:11px; line-height:1.8; }
-    footer a { color:var(--peach); text-decoration:none; box-shadow:inset 0 -2px 0 currentColor; }
-    footer a:hover, footer a:focus-visible { background:var(--red); color:var(--cream); box-shadow:none; outline:none; }
-
-    .howto { font-size:12px; color:var(--peach); text-decoration:none; box-shadow:inset 0 -2px 0 currentColor; }
-    .howto:hover, .howto:focus-visible { background:var(--red); color:var(--cream); box-shadow:none; outline:none; }
-
-    /* ---------- how to install: a tab per kind of device, and a drawn picture of the screen for every step ---------- */
-    .install { --brk:16px; padding:32px 32px 36px; display:flex; flex-direction:column; gap:20px; }
-    .install-head { display:grid; grid-template-columns:auto 1fr; gap:20px; align-items:center; }
-    .install-head img { width:132px; height:auto; }
-    .install h2 { margin:0 0 8px; font-weight:400; font-size:20px; color:var(--accent); }
-    .install-head p { margin:0; font-size:12px; line-height:1.8; text-transform:none; }
-    .tabs { display:flex; flex-wrap:wrap; gap:8px; }
-    .tab { font:inherit; font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink); padding:10px 14px; border:0; cursor:pointer;
-      background:var(--paper-lo); box-shadow:inset 4px 4px 0 0 var(--paper), inset -4px -4px 0 0 var(--tan); }
-    .tab[aria-selected="true"] { color:var(--cream); text-shadow:2px 2px 0 var(--red-lo); background:var(--red);
-      box-shadow:inset 4px 4px 0 0 var(--red-hi), inset -4px -4px 0 0 var(--red-lo); }
-    .tab:focus-visible { outline:4px solid var(--peach); outline-offset:2px; }
-    .steps { list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(auto-fill, minmax(176px, 1fr)); gap:24px 20px; counter-reset:step; }
-    .steps li { display:flex; flex-direction:column; gap:10px; counter-increment:step; }
-    .shot { display:grid; place-items:center; min-height:120px; }
-    .shot svg { width:100%; max-width:176px; height:auto; display:block; }
-    .shot.wide svg { max-width:100%; }
-    .steps li.wide { grid-column:span 2; }
-    .say { display:flex; gap:10px; align-items:flex-start; font-size:12px; line-height:1.7; text-transform:none; letter-spacing:.02em; }
-    .say::before { content:counter(step); flex:none; display:grid; place-items:center; width:26px; height:26px; font-size:12px; color:var(--cream);
-      background:var(--red); box-shadow:inset 3px 3px 0 0 var(--red-hi), inset -3px -3px 0 0 var(--red-lo); text-transform:uppercase; }
-    .steps li.done .say::before { content:":)"; background:#488885; box-shadow:inset 3px 3px 0 0 #64b082, inset -3px -3px 0 0 #3f5b74; font-size:11px; }
-    .say b { font-weight:400; color:var(--accent); }
-    .say small { display:block; margin-top:6px; font-size:12px; }
-    .say .open { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
-    .say .open .btn { font-size:11px; padding:8px 10px; margin:0 0 4px; }
-    .tip { margin:0; font-size:12px; line-height:1.8; text-transform:none; padding:12px 16px; background:var(--paper-lo); }
-    .tip b { font-weight:400; color:var(--accent); }
-    .hit { animation:hit 1.2s steps(2) infinite; }                   /* the button to press blinks between red and peach */
-    @keyframes hit { 50% { stroke:var(--peach); } }
-
-    /* ---------- the promo videos: 16:9 on computers, the 9:16 cut on phones ---------- */
-    .watch { --brk:16px; padding:32px 32px 36px; display:flex; flex-direction:column; gap:20px; }
-    .watch h2 { margin:0 0 8px; font-weight:400; font-size:20px; color:var(--accent); }
-    .watch-head p { margin:0; font-size:12px; line-height:1.8; text-transform:none; }
-    .film { margin:0; }
-    .film video { display:block; width:100%; height:auto; aspect-ratio:16 / 9; background:var(--desk); }
-
-    /* ---------- questions: each one opens when you tap it ---------- */
-    .faq { --brk:16px; padding:32px 32px 36px; display:flex; flex-direction:column; gap:12px; }
-    .faq h2, .about h2 { margin:0 0 8px; font-weight:400; font-size:20px; color:var(--accent); }
-    .faq details { box-shadow:inset 0 -4px 0 0 var(--paper-lo); }
-    .faq summary { list-style:none; cursor:pointer; display:flex; align-items:center; gap:12px; padding:14px 0 16px; font-size:13px; line-height:1.5; }
-    .faq summary::-webkit-details-marker { display:none; }
-    .faq summary::before { content:"+"; flex:none; display:grid; place-items:center; width:24px; height:24px; font-size:14px; color:var(--cream);
-      background:var(--red); box-shadow:inset 3px 3px 0 0 var(--red-hi), inset -3px -3px 0 0 var(--red-lo); }
-    .faq details[open] summary::before { content:"-"; }
-    .faq summary:focus-visible { outline:4px solid var(--peach); outline-offset:2px; }
-    .faq details p { margin:0 0 18px 36px; font-size:12px; line-height:1.8; text-transform:none; letter-spacing:.02em; }
-    .faq details p a { color:var(--accent); }
-
-    /* ---------- about: the beaver and the person who made him ---------- */
-    .about { --brk:16px; padding:32px 32px 36px; display:flex; flex-direction:column; gap:20px; }
-    .about-grid { display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:32px; }
-    .who { display:flex; flex-direction:column; gap:12px; }
-    .who img { width:352px; max-width:100%; height:auto; align-self:center; }
-    .who h3 { margin:0; font-weight:400; font-size:14px; color:var(--accent); }
-    .who p { margin:0; font-size:12px; line-height:1.8; text-transform:none; letter-spacing:.02em; }
-    .who .btn { align-self:flex-start; }
-
-    @media (max-width:620px) {
-      .install { padding:26px 20px 30px; }
-      .faq, .about { padding:26px 20px 30px; }
-      .about-grid { grid-template-columns:1fr; }
-      .brand { display:none; }                                    /* phones: all five buttons fit across, no icon */
-      .navlinks { margin:0; width:100%; justify-content:space-between; gap:4px; padding:4px 2px; }
-      .navlinks a { font-size:11px; letter-spacing:.02em; padding:10px 6px; }        /* (the site keeps text at 11px or more) */
-      .watch { padding:26px 20px 30px; }
-      .film video { aspect-ratio:9 / 16; }
-      .install-head { grid-template-columns:1fr; justify-items:center; text-align:center; }
-      .steps { grid-template-columns:1fr; gap:22px; }
-      .steps li, .steps li.wide { grid-column:auto; display:grid; grid-template-columns:118px 1fr; gap:14px; align-items:start; }
-      .steps li.wide { grid-template-columns:1fr; }
-      .shot svg { max-width:118px; }
-      .shot.wide svg { max-width:100%; }
-    }
-    @media (max-width:620px) {
-      .hero { grid-template-columns:1fr; justify-items:center; text-align:center; }
-      .hero-pic img { width:132px; }
-      .share-row { justify-content:center; }
-      .card { padding:26px 22px 48px; }
-    }
-    /* ---------- back to the top: a little red button in the corner, there once you've scrolled past the beaver ---------- */
-    .totop { position:fixed; z-index:10; right:max(16px, env(safe-area-inset-right)); bottom:max(16px, env(safe-area-inset-bottom));
-      margin:0; padding:10px 12px 8px; flex-direction:column; gap:6px; font-size:11px;
-      opacity:0; visibility:hidden; transform:translateY(8px); transition:opacity .2s, transform .2s, visibility 0s .2s; }
-    .totop.on { opacity:1; visibility:visible; transform:none; transition:opacity .2s, transform .2s; }
-    .totop svg { display:block; filter:drop-shadow(2px 2px 0 var(--red-lo)); }
-    @media (prefers-reduced-motion:reduce) { .btn:active { transform:none; } .hit { animation:none; } .totop, .totop.on { transition:none; transform:none; } }
-  </style>
+  <link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
   <nav class="topnav" aria-label="Sections">
     <div class="topnav-in">
       <a class="brand" href="#top"><img src="assets/favicon.svg" width="32" height="32" alt=""><span>Beaver Apps</span></a>
       <div class="navlinks">
-        <a href="#apps">Apps</a><a href="#watch">Videos</a><a href="#install">Install</a><a href="#faq">FAQ</a><a href="#about">About</a>
+        <a href="#apps">Apps</a><a href="#diary">Diary</a><a href="#watch">Videos</a><a href="#install">Install</a><a href="#faq">FAQ</a><a href="#about">About</a>
       </div>
     </div>
   </nav>
@@ -236,6 +69,16 @@
         </ul>
         <a class="btn" href="https://beaver-apps.github.io/focus/">Open Beaver Focus</a>
       </article>
+    </section>
+
+    <section class="diary paper" id="diary" aria-labelledby="diary-title">
+      <div class="diary-head">
+        <h2 id="diary-title">The beaver's diary</h2>
+        <p class="diary-sub">Where I write down what I hear about my next jobs. Shhh, mostly hints :)</p>
+      </div>
+      <!-- the newest entries, copied in from diary.html (the one place they're written) -->
+      <div class="entries" id="diary-latest"></div>
+      <a class="btn" href="diary.html">Read the whole diary</a>
     </section>
 
     <section class="watch paper" id="watch" aria-labelledby="watch-title">
@@ -387,6 +230,17 @@
       } catch (e) { if (e && e.name !== 'AbortError') note.textContent = data.url; }
     });
 
+    // ---------- the diary: the newest three entries from diary.html (an entry's h2 is an h3 here, under the section's h2) ----------
+    fetch('diary.html').then(r => r.ok ? r.text() : '').then(html => {
+      const box = document.getElementById('diary-latest');
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      [...doc.querySelectorAll('article.entry')].slice(0, 3).forEach(a => {
+        const e = document.importNode(a, true), h = e.querySelector('h2');
+        if (h) { const h3 = document.createElement('h3'); h3.textContent = h.textContent; h.replaceWith(h3); }
+        e.removeAttribute('id'); box.append(e);
+      });
+    }).catch(() => {});
+
     // ---------- the section bar: the button for the section on screen is red ----------
     const navLinks = [...document.querySelectorAll('.navlinks a')];
     const mark = id => navLinks.forEach(a => {
@@ -396,7 +250,7 @@
       if (on && (a.offsetLeft < bar.scrollLeft || a.offsetLeft + a.offsetWidth > bar.scrollLeft + bar.clientWidth)) bar.scrollLeft = a.offsetLeft - 8;
     });
     const seen = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) mark(e.target.id); }), { rootMargin: '-35% 0px -60% 0px' });
-    ['top', 'apps', 'watch', 'install', 'faq', 'about'].forEach(id => seen.observe(document.getElementById(id)));
+    ['top', 'apps', 'diary', 'watch', 'install', 'faq', 'about'].forEach(id => seen.observe(document.getElementById(id)));
 
     // ---------- back to the top: shows once the beaver at the top is off screen ----------
     const toTop = document.querySelector('.totop');

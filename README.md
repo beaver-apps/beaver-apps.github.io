@@ -29,6 +29,9 @@ picture-by-picture guide for iPhone and iPad, Android and computers (it opens on
 answers to the usual questions (free? account? where's my data? offline? sync?), and a bit about me and the person
 who made me.
 
+I also keep a [diary](https://beaver-apps.github.io/diary.html) where I write down what I hear about my next jobs.
+Mostly hints, I'm not alowed to tell you everything yet :)
+
 ## About this repo
 
 This repo is the little front page at https://beaver-apps.github.io/ that links to all the apps (each app has its own
