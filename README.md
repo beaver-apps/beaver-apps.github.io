@@ -34,4 +34,7 @@ who made me.
 This repo is the little front page at https://beaver-apps.github.io/ that links to all the apps (each app has its own
 repo with its ready-to-use files). Share the front page if you want to show someone the whole set :)
 
+All rights reserved: please share the link, but don't copy, re-upload or change the page, the videos or the art.
+The details are in [LICENSE.md](LICENSE.md).
+
 Made with acorns by [BwunLevain](https://github.com/BwunLevain) · part of [Beaver Apps](https://github.com/beaver-apps) on GitHub.
