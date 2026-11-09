@@ -52,9 +52,13 @@ h1 { margin:0 0 12px; font-weight:400; font-size:clamp(28px, 6vw, 44px); line-he
   box-shadow:inset 4px 4px 0 0 var(--red-hi), inset -4px -4px 0 0 var(--red-lo), 0 4px 0 0 var(--red-lo); }
 .btn:active { transform:translateY(4px); box-shadow:inset 4px 4px 0 0 var(--red-lo), inset -4px -4px 0 0 var(--red-hi); }
 .btn:focus-visible { outline:4px solid var(--peach); outline-offset:4px; }
+.btn { min-height:44px; box-sizing:border-box; }
+/* a second, quieter button (install): tan paper instead of red */
+.btn-quiet { font-size:12px; color:var(--ink); text-shadow:none; background:var(--tan); box-shadow:inset 4px 4px 0 0 var(--paper-lo), inset -4px -4px 0 0 var(--tan-lo), 0 4px 0 0 var(--tan-lo); }
+.btn-quiet:active { box-shadow:inset 4px 4px 0 0 var(--tan-lo), inset -4px -4px 0 0 var(--paper-lo); }
 .hero-open { display:flex; flex-wrap:wrap; gap:8px; margin:0 0 14px -4px; }      /* the two apps are the first thing to press */
 .hero-open .btn { flex-direction:column; align-items:flex-start; gap:6px; }
-.hero-open .btn small { font-size:11px; letter-spacing:.04em; color:var(--paper-lo); text-shadow:none; }   /* what each one is for */
+.hero-open .btn small { font-size:11px; letter-spacing:.04em; color:var(--cream); text-shadow:none; }   /* what each one is for */
 main section p { max-width:64ch; }                               /* reading lines stay a comfortable length */
 .share-row { display:flex; flex-wrap:wrap; gap:8px 16px; align-items:center; margin:0; font-size:12px; line-height:1.8; max-width:56ch; }
 .howto.quiet { font:inherit; font-size:12px; background:none; border:0; padding:0; cursor:pointer; min-height:44px; }   /* Share: a quiet link, not a button */
@@ -70,7 +74,7 @@ main section p { max-width:64ch; }                               /* reading line
 .card .pic img { width:352px; max-width:100%; height:auto; }   /* whole-number scales only */
 .card h2 { margin:0; font-weight:400; font-size:20px; color:var(--accent); }
 .card p { margin:0; font-size:12px; line-height:1.8; text-transform:none; }
-.card ul { margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px; font-size:11px; line-height:1.6; }
+.card ul { margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px; font-size:13px; line-height:1.6; }
 .card li::before { content:""; display:inline-block; width:8px; height:8px; margin-right:10px; vertical-align:1px; background:var(--tan);
   clip-path:polygon(50% 0, 100% 50%, 50% 100%, 0 50%); }   /* a little pixel diamond */
 .card .btn { align-self:flex-start; margin-top:auto; }
@@ -105,10 +109,10 @@ footer a:hover, footer a:focus-visible { background:var(--red); color:var(--crea
   background:var(--red); box-shadow:inset 3px 3px 0 0 var(--red-hi), inset -3px -3px 0 0 var(--red-lo); text-transform:uppercase; }
 .steps li.done .say::before { content:":)"; background:#488885; box-shadow:inset 3px 3px 0 0 #64b082, inset -3px -3px 0 0 #3f5b74; font-size:11px; }
 .say b { font-weight:400; color:var(--accent); }
-.say small { display:block; margin-top:6px; font-size:12px; }
+.say small { display:block; margin-top:6px; font-size:13px; }
 .say .open { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
 .say .open .btn { font-size:11px; padding:8px 10px; margin:0 0 4px; }
-.tip { margin:0; font-size:12px; line-height:1.8; text-transform:none; padding:12px 16px; background:var(--paper-lo); }
+.tip { margin:0; font-size:13px; line-height:1.8; text-transform:none; padding:12px 16px; background:var(--paper-lo); }
 .tip b { font-weight:400; color:var(--accent); }
 .hit { animation:hit 1.2s steps(2) infinite; }                   /* the button to press blinks between red and peach */
 @keyframes hit { 50% { stroke:var(--peach); } }
@@ -166,7 +170,9 @@ footer a:hover, footer a:focus-visible { background:var(--red); color:var(--crea
   .hero-pic { padding:12px 18px 10px; }
   .hero-pic img { width:96px; }                                 /* small enough that the first app shows without scrolling */
   .hero .tag { margin-bottom:14px; }
-  .hero-open { justify-content:center; margin:0 0 10px; }
+  .hero-open { flex-direction:column; align-items:stretch; margin:0 0 10px; width:100%; }   /* two buttons of one width */
+  .hero-open .btn { align-items:center; margin:0; }
+  .hero .tag { font-size:12px; line-height:1.7; }
   .share-row { justify-content:center; }
   .card { padding:26px 22px 48px; }
 }
