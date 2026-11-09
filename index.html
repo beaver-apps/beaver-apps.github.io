@@ -37,7 +37,8 @@
       <div class="hero-pic paper"><img src="assets/beaver-wave.gif" width="176" height="120" alt="The pixel beaver waving hello"></div>
       <div>
         <h1>Beaver Apps</h1>
-        <p class="tag">Little pixel apps with a beaver in them :) Free, no account, works offline, in 10 languages, and your stuff stays on your device.</p>
+        <p class="tag">Little pixel apps with a beaver in them :)</p>
+        <p class="tag-sub">Free, no account, works offline, in 10 languages, and your stuff stays on your device.</p>
         <div class="hero-open">
           <a class="btn" href="https://beaver-apps.github.io/reader/"><span>Open Beaver Reader</span><small>for your books</small></a>
           <a class="btn" href="https://beaver-apps.github.io/focus/"><span>Open Beaver Focus</span><small>for focus time</small></a>
@@ -45,8 +46,6 @@
         <p class="share-row">
           <span>They work right away in your browser. Installing is optional.</span>
           <a class="btn btn-quiet" href="#install">Put one on your home screen</a>
-          <button class="howto quiet" id="share" type="button">Share the beaver apps</button>
-          <span class="note" id="share-note" role="status" aria-live="polite"></span>
         </p>
       </div>
     </header>
@@ -54,6 +53,7 @@
     <section class="apps" id="apps" aria-label="The apps">
       <article class="card paper">
         <div class="pic"><img src="assets/beaver-read.gif" width="352" height="240" alt="The beaver reading an open book"></div>
+        <img class="ui-shot" src="assets/ui-reader.png" width="390" height="400" loading="lazy" alt="Beaver Reader on a phone: a pixel bookcase with two books facing out on the Reading now shelf and three spines on To read">
         <h2>Beaver Reader</h2>
         <p>A cozy EPUB and PDF reader with a pixel bookcase. The beaver climbs it, dusts it and reads along with you.</p>
         <ul>
@@ -65,6 +65,7 @@
       </article>
       <article class="card paper">
         <div class="pic"><img src="assets/beaver-code.gif" width="352" height="240" alt="The beaver typing away at a little computer"></div>
+        <img class="ui-shot" src="assets/ui-focus.png" width="390" height="270" loading="lazy" alt="Beaver Focus on a phone: the beaver coding with headphones at his desk above a 24:58 focus timer">
         <h2>Beaver Focus</h2>
         <p>A pomodoro timer with a lo-fi radio. The beaver works while you work, takes breaks with you and naps at night.</p>
         <ul>
@@ -183,25 +184,28 @@
         <summary>Phone, tablet or computer?</summary>
         <p>All of them. Each app has a layout for phones and one for computers, and it runs in any modern browser.</p>
       </details>
-      <details>
+      <details class="faq-more">
+        <summary>More questions</summary>
+        <details>
         <summary>How do I get my stuff on another device?</summary>
         <p>Turn on sync in Settings. Beaver Reader keeps your books, your place, highlights, notes and reading stats in your own Google Drive (or a private GitHub repo), and they follow you to every device. Beaver Focus keeps your stats and settings in a private gist on your own GitHub. Either way, it's your account and only you can see it.</p>
       </details>
-      <details>
+        <details>
         <summary>Which languages?</summary>
         <p>Both speak English, Svenska, Dansk, Norsk, Suomi, Deutsch, Español, Français, 中文 and 日本語. They start in your device's language, and you can switch in Settings.</p>
       </details>
-      <details>
+        <details>
         <summary>Are they in the App Store or Google Play?</summary>
         <p>No, and they don't need to be. You add them straight from your browser in a few taps, and they get their own icon like any other app. The <a href="#install">install guide</a> shows how.</p>
       </details>
-      <details>
+        <details>
         <summary>I found a bug, or I have an idea</summary>
         <p>Tell the beaver :) Open an issue on the app's GitHub page: <a href="https://github.com/beaver-apps/reader/issues">Beaver Reader</a> or <a href="https://github.com/beaver-apps/focus/issues">Beaver Focus</a>. You'll need a free GitHub account.</p>
       </details>
-      <details>
+        <details>
         <summary>Can I share or change them?</summary>
         <p>Share them all you like: send the links, post screenshots and videos of you using them. But the apps, the beaver and the art belong to BwunLevain, so please don't copy, re-upload, change or sell them. Got an idea for a change? Tell the beaver (see above) :)</p>
+      </details>
       </details>
     </section>
 
@@ -222,7 +226,7 @@
       </div>
     </section>
 
-    <footer>Made with acorns by <a href="https://github.com/BwunLevain">BwunLevain</a> · part of <a href="https://github.com/beaver-apps">Beaver Apps</a> on GitHub · <a href="privacy.html">Privacy</a></footer>
+    <footer><p class="share-foot"><button class="howto quiet" id="share" type="button">Share the beaver apps</button> <span class="note" id="share-note" role="status" aria-live="polite"></span></p>Made with acorns by <a href="https://github.com/BwunLevain">BwunLevain</a> · part of <a href="https://github.com/beaver-apps">Beaver Apps</a> on GitHub · <a href="privacy.html">Privacy</a></footer>
   </main>
   <a class="btn totop" href="#top" aria-label="Back to the top"><svg width="14" height="14" viewBox="0 0 7 7" aria-hidden="true" shape-rendering="crispEdges" fill="currentColor"><path d="M3 0h1v1h1v1h1v1h1v1H5v3H2V4H0V3h1V2h1V1h1z"/></svg><span>Top</span></a>
   <script>

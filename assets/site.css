@@ -46,7 +46,8 @@ a { color:inherit; }
 .hero-pic { padding:20px 28px 16px; }
 .hero-pic img { width:224px; height:auto; }   /* the GIFs are drawn on the same cream as the paper */
 h1 { margin:0 0 12px; font-weight:400; font-size:clamp(28px, 6vw, 44px); line-height:1.1; color:var(--cream); text-shadow:4px 4px 0 var(--red); }
-.tag { margin:0 0 20px; font-size:13px; line-height:1.8; max-width:52ch; }
+.tag { margin:0 0 8px; font-size:13px; line-height:1.8; max-width:52ch; }
+.tag-sub { margin:0 0 20px; font-size:11px; line-height:1.8; max-width:56ch; color:var(--paper-lo); }
 .btn { font:inherit; font-size:13px; letter-spacing:.06em; color:var(--cream); text-shadow:2px 2px 0 var(--red-lo); text-decoration:none;
   display:inline-flex; align-items:center; gap:10px; padding:12px 18px; margin:4px; border:0; cursor:pointer; background:var(--red);
   box-shadow:inset 4px 4px 0 0 var(--red-hi), inset -4px -4px 0 0 var(--red-lo), 0 4px 0 0 var(--red-lo); }
@@ -80,6 +81,10 @@ main section p { max-width:64ch; }                               /* reading line
 .card .btn { align-self:flex-start; margin-top:auto; }
 
 footer { text-align:center; font-size:11px; line-height:1.8; }
+.share-foot { margin:0 0 8px; }
+.ui-shot { display:block; width:100%; height:auto; aspect-ratio:3 / 2; object-fit:cover; object-position:top; image-rendering:pixelated; margin:0 0 16px; box-shadow:0 0 0 4px var(--ink); }   /* the real app, next to the beaver */
+.faq-more > summary { color:var(--accent); }
+.navlinks a { min-height:44px; display:inline-flex; align-items:center; }
 footer a { color:var(--peach); text-decoration:none; box-shadow:inset 0 -2px 0 currentColor; }
 footer a:hover, footer a:focus-visible { background:var(--red); color:var(--cream); box-shadow:none; outline:none; }
 
@@ -151,9 +156,10 @@ footer a:hover, footer a:focus-visible { background:var(--red); color:var(--crea
   .install { padding:26px 20px 30px; }
   .faq, .about { padding:26px 20px 30px; }
   .about-grid { grid-template-columns:1fr; }
-  .brand { display:none; }                                    /* phones: all six buttons fit across, no icon */
+  .brand span { display:none; }                               /* phones: just the beaver icon, so all six buttons still fit */
+  .brand img { width:24px; height:24px; }
   .navlinks { margin:0; width:100%; justify-content:space-between; gap:4px; padding:4px 2px; }
-  .navlinks a { font-size:11px; letter-spacing:.02em; padding:0 5px; min-height:44px; display:inline-flex; align-items:center; }   /* 44px to tap; text 11px or more */
+  .navlinks a { font-size:11px; letter-spacing:.02em; padding:0 4px; min-height:44px; display:inline-flex; align-items:center; }   /* 44px to tap; text 11px or more */
   .tab { min-height:44px; }
   .watch { padding:26px 20px 30px; }
   .film video { aspect-ratio:9 / 16; }
