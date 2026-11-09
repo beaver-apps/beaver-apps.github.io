@@ -28,7 +28,7 @@
     <div class="topnav-in">
       <a class="brand" href="#top"><img src="assets/favicon.svg" width="32" height="32" alt=""><span>Beaver Apps</span></a>
       <div class="navlinks">
-        <a href="#apps">Apps</a><a href="#watch">Videos</a><a href="#install">Install</a><a href="#diary">Diary</a><a href="#faq">FAQ</a><a href="#about">About</a>
+        <a href="#apps">Apps</a><a href="#install">Install</a><a href="#watch">Videos</a><a href="#diary">Diary</a><a href="#faq">FAQ</a><a href="#about">About</a>
       </div>
     </div>
   </nav>
@@ -44,7 +44,7 @@
           <a class="btn" href="https://beaver-apps.github.io/focus/"><span>Open Beaver Focus</span><small>for focus time</small></a>
         </div>
         <p class="share-row">
-          <span>They work right away in your browser. Installing is optional.</span>
+          <span>They work right away in your browser. Installing is optional: it just puts an icon on your home screen, like any other app.</span>
           <a class="btn btn-quiet" href="#install">Put one on your home screen</a>
         </p>
       </div>
@@ -75,33 +75,6 @@
         </ul>
         <a class="btn" href="https://beaver-apps.github.io/focus/">Open Beaver Focus</a>
       </article>
-    </section>
-
-    <section class="watch paper" id="watch" aria-labelledby="watch-title">
-      <div class="watch-head">
-        <h2 id="watch-title">Watch the beaver show you around</h2>
-        <p>Pick an app. Half a minute each, with sound. The music is from Beaver Pod, the lo-fi radio in Beaver Focus :)</p>
-      </div>
-      <div class="tabs" role="tablist" aria-label="Which app">
-        <button class="tab" role="tab" id="tab-film-reader" aria-controls="film-reader" aria-selected="true" type="button">Beaver Reader</button>
-        <button class="tab" role="tab" id="tab-film-focus" aria-controls="film-focus" aria-selected="false" type="button" tabindex="-1">Beaver Focus</button>
-      </div>
-      <div>
-        <figure class="film" id="film-reader" role="tabpanel" aria-labelledby="tab-film-reader">
-          <video controls preload="none" playsinline width="1920" height="1080" poster="assets/promo/beaver-reader-16x9.jpg"
-            data-tall-poster="assets/promo/beaver-reader-9x16.jpg" aria-label="Beaver Reader promo video">
-            <source src="assets/promo/beaver-reader-9x16.mp4" type="video/mp4" media="(max-width:620px)">
-            <source src="assets/promo/beaver-reader-16x9.mp4" type="video/mp4">
-          </video>
-        </figure>
-        <figure class="film" id="film-focus" role="tabpanel" aria-labelledby="tab-film-focus" hidden>
-          <video controls preload="none" playsinline width="1920" height="1080" poster="assets/promo/beaver-focus-16x9.jpg"
-            data-tall-poster="assets/promo/beaver-focus-9x16.jpg" aria-label="Beaver Focus promo video">
-            <source src="assets/promo/beaver-focus-9x16.mp4" type="video/mp4" media="(max-width:620px)">
-            <source src="assets/promo/beaver-focus-16x9.mp4" type="video/mp4">
-          </video>
-        </figure>
-      </div>
     </section>
 
     <section class="install paper" id="install" aria-labelledby="install-title">
@@ -151,6 +124,33 @@
       </div>
     </section>
 
+    <section class="watch paper" id="watch" aria-labelledby="watch-title">
+      <div class="watch-head">
+        <h2 id="watch-title">Watch the beaver show you around</h2>
+        <p>Pick an app. Half a minute each, with sound. The music is from Beaver Pod, the lo-fi radio in Beaver Focus :)</p>
+      </div>
+      <div class="tabs" role="tablist" aria-label="Which app">
+        <button class="tab" role="tab" id="tab-film-reader" aria-controls="film-reader" aria-selected="true" type="button">Beaver Reader</button>
+        <button class="tab" role="tab" id="tab-film-focus" aria-controls="film-focus" aria-selected="false" type="button" tabindex="-1">Beaver Focus</button>
+      </div>
+      <div>
+        <figure class="film" id="film-reader" role="tabpanel" aria-labelledby="tab-film-reader">
+          <video controls preload="none" playsinline width="1920" height="1080" poster="assets/promo/beaver-reader-16x9.jpg"
+            data-tall-poster="assets/promo/beaver-reader-9x16.jpg" aria-label="Beaver Reader promo video">
+            <source src="assets/promo/beaver-reader-9x16.mp4" type="video/mp4" media="(max-width:620px)">
+            <source src="assets/promo/beaver-reader-16x9.mp4" type="video/mp4">
+          </video>
+        </figure>
+        <figure class="film" id="film-focus" role="tabpanel" aria-labelledby="tab-film-focus" hidden>
+          <video controls preload="none" playsinline width="1920" height="1080" poster="assets/promo/beaver-focus-16x9.jpg"
+            data-tall-poster="assets/promo/beaver-focus-9x16.jpg" aria-label="Beaver Focus promo video">
+            <source src="assets/promo/beaver-focus-9x16.mp4" type="video/mp4" media="(max-width:620px)">
+            <source src="assets/promo/beaver-focus-16x9.mp4" type="video/mp4">
+          </video>
+        </figure>
+      </div>
+    </section>
+
 
     <section class="diary paper" id="diary" aria-labelledby="diary-title">
       <div class="diary-head">
@@ -158,7 +158,7 @@
         <p class="diary-sub">Where I write down what I hear about my next jobs. Shhh, mostly hints :)</p>
       </div>
       <!-- the newest entries, copied in from diary.html (the one place they're written) -->
-      <div class="entries" id="diary-latest"><p class="diary-fallback">My newest notes are in the diary. Come have a look :)</p></div>
+      <div class="entries" id="diary-latest"><p class="diary-fallback">My newest notes are in <a href="diary.html">the diary</a>. Come have a look :)</p></div>
       <a class="btn" href="diary.html">Read the whole diary</a>
     </section>
 
@@ -260,7 +260,7 @@
       if (on && (a.offsetLeft < bar.scrollLeft || a.offsetLeft + a.offsetWidth > bar.scrollLeft + bar.clientWidth)) bar.scrollLeft = a.offsetLeft - 8;
     });
     const seen = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) mark(e.target.id); }), { rootMargin: '-35% 0px -60% 0px' });
-    ['top', 'apps', 'watch', 'install', 'diary', 'faq', 'about'].forEach(id => seen.observe(document.getElementById(id)));
+    ['top', 'apps', 'install', 'watch', 'diary', 'faq', 'about'].forEach(id => seen.observe(document.getElementById(id)));
 
     // ---------- back to the top: shows once the beaver at the top is off screen ----------
     const toTop = document.querySelector('.totop');
