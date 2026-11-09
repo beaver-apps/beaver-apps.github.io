@@ -52,8 +52,11 @@ h1 { margin:0 0 12px; font-weight:400; font-size:clamp(28px, 6vw, 44px); line-he
   box-shadow:inset 4px 4px 0 0 var(--red-hi), inset -4px -4px 0 0 var(--red-lo), 0 4px 0 0 var(--red-lo); }
 .btn:active { transform:translateY(4px); box-shadow:inset 4px 4px 0 0 var(--red-lo), inset -4px -4px 0 0 var(--red-hi); }
 .btn:focus-visible { outline:4px solid var(--peach); outline-offset:4px; }
-.share-row { display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
+.hero-open { display:flex; flex-wrap:wrap; gap:8px; margin:0 0 14px -4px; }      /* the two apps are the first thing to press */
+.share-row { display:flex; flex-wrap:wrap; gap:8px 16px; align-items:center; margin:0; font-size:12px; line-height:1.8; max-width:56ch; }
+.howto.quiet { font:inherit; font-size:12px; background:none; border:0; padding:0; cursor:pointer; min-height:44px; }   /* Share: a quiet link, not a button */
 .note { font-size:11px; color:var(--peach); min-height:1em; }
+.diary-fallback { margin:0 0 8px; font-size:13px; line-height:22px; }
 
 .apps { display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:32px; }
 /* an app card: a page with a stack of page edges underneath, like a closed book seen from the front */
@@ -143,7 +146,8 @@ footer a:hover, footer a:focus-visible { background:var(--red); color:var(--crea
   .about-grid { grid-template-columns:1fr; }
   .brand { display:none; }                                    /* phones: all six buttons fit across, no icon */
   .navlinks { margin:0; width:100%; justify-content:space-between; gap:4px; padding:4px 2px; }
-  .navlinks a { font-size:11px; letter-spacing:.02em; padding:10px 5px; }        /* (the site keeps text at 11px or more) */
+  .navlinks a { font-size:11px; letter-spacing:.02em; padding:0 5px; min-height:44px; display:inline-flex; align-items:center; }   /* 44px to tap; text 11px or more */
+  .tab { min-height:44px; }
   .watch { padding:26px 20px 30px; }
   .film video { aspect-ratio:9 / 16; }
   .install-head { grid-template-columns:1fr; justify-items:center; text-align:center; }
@@ -155,7 +159,11 @@ footer a:hover, footer a:focus-visible { background:var(--red); color:var(--crea
 }
 @media (max-width:620px) {
   .hero { grid-template-columns:1fr; justify-items:center; text-align:center; }
-  .hero-pic img { width:132px; }
+  .hero { gap:14px; }
+  .hero-pic { padding:12px 18px 10px; }
+  .hero-pic img { width:96px; }                                 /* small enough that the first app shows without scrolling */
+  .hero .tag { margin-bottom:14px; }
+  .hero-open { justify-content:center; margin:0 0 10px; }
   .share-row { justify-content:center; }
   .card { padding:26px 22px 48px; }
 }
